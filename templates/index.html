@@ -1,0 +1,17 @@
+<html>
+<head>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<center>
+ <h1>Predicting Employee's Salary</h1>
+    <form method="post" action="/">
+        Years of Experience <input name="Years_of_Experience" type="text"><br><br>
+        Age <input name="age" type="number"><br><br>
+        Education Level <input name="Education_Level" type="number"><br><br>
+        <button type="submit" value="Submit">Submit</button><br><br>
+        Predicted Salary: {{ salary }}
+    </form>
+</center>
+</body>
+</html>
