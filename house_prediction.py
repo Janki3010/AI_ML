@@ -10,16 +10,11 @@ plt.ylabel('price')
 plt.scatter(df.area, df.price, color='red', marker='+')
 plt.show()
 
-new_df = df.drop('price', axis='columns')
-print('area\n', new_df)
-price = df.price
-print('price\n', price)
-
 # Create linear regression object
 reg = linear_model.LinearRegression()
-reg.fit(new_df,price)
+reg.fit(df[['area']],df.price)
 
-print("Predicted Price:", reg.predict([[3300]])[0]) 
+print("Predicted Price:", reg.predict([[3300]])[0])
 reg_coef = reg.coef_[0]
 reg_intercept = reg.intercept_
 
@@ -32,9 +27,6 @@ area_df = pd.read_csv("area.csv")
 area_df.head(3)
 
 p = reg.predict(area_df)
-print("all area prediction:", p)
-
 area_df['price'] = p
-print(area_df)
 
 area_df.to_csv("prediction.csv")
