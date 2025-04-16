@@ -21,4 +21,16 @@ ts_coef = lr.coef_[1]
 is_coef = lr.coef_[2]
 reg_intercept = lr.intercept_
 
-print((int(ex_coef)*experience) + (int(ts_coef)*test_score) + (int(is_coef)*in_score) + reg_intercept)
+print("Calculation of predicted salary using formula", (int(ex_coef)*experience) + (int(ts_coef)*test_score) + (int(is_coef)*in_score) + reg_intercept)
+
+# Save Model To a File Using Python Pickle
+import pickle
+
+with open('salary_model_pickle', 'wb') as file:
+    pickle.dump(lr,file)
+
+# Load Saved Model
+with open('salary_model_pickle', 'rb') as file:
+    mp = pickle.load(file)
+
+print("Predicated Salary:" ,mp.predict([[5, 8, 9]])[0])
