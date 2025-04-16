@@ -1,8 +1,8 @@
-import pandas as pa
+import pandas as pd
 from word2number import w2n
 from sklearn import linear_model
 
-df = pa.read_csv("salary_prediction.csv")
+df = pd.read_csv("salary_prediction.csv")
 df.experience = df.experience.fillna("zero")
 
 df.experience = df.experience.apply(w2n.word_to_num)
@@ -14,7 +14,10 @@ lr.fit(df[['experience', 'test_score', 'interview_score']], df.salary)
 
 experience, test_score, in_score = input("Enter experience, test_score, interview_score values: ").split()
 experience, test_score, in_score = int(experience), int(test_score), int(in_score)
-print(f"Predicted Salary for experience {experience} test_score {test_score}, interview_score {in_score}: {lr.predict([[experience, test_score, in_score]])[0]}")
+
+input_data = pd.DataFrame([[experience, test_score, in_score]], columns=['experience', 'test_score', 'in_score'])
+prediction = lr.predict(input_data)[0]
+print(f"Predicted Salary for experience {experience} test_score {test_score}, interview_score {in_score}: {prediction}")
 
 ex_coef = lr.coef_[0]
 ts_coef = lr.coef_[1]
@@ -29,8 +32,13 @@ import pickle
 with open('salary_model_pickle', 'wb') as file:
     pickle.dump(lr,file)
 
-# Load Saved Model
+# Load Saved Model (u can use this model in any file)
 with open('salary_model_pickle', 'rb') as file:
     mp = pickle.load(file)
 
-print("Predicated Salary:" ,mp.predict([[5, 8, 9]])[0])
+experience, test_score, in_score = input("Enter experience, test_score, interview_score values: ").split()
+experience, test_score, in_score = int(experience), int(test_score), int(in_score)
+
+input_data = pd.DataFrame([[experience, test_score, in_score]], columns=['experience', 'test_score', 'in_score'])
+prediction = mp.predict(input_data)[0]
+print("Predicated Salary:" ,prediction)
